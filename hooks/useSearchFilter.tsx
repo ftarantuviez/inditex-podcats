@@ -14,7 +14,7 @@ const useSearchFilter = (podcasts: Podcasts, q: string) => {
     } else setFilteredPodcasts(podcasts);
   }, [podcasts, q]);
 
-  return { filteredPodcasts: filteredPodcasts };
+  return { filteredPodcasts };
 };
 
 export default useSearchFilter;

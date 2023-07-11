@@ -3,7 +3,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 export type PodcastsProviderValues = {
   podcasts: Podcasts;
   podcastsByFilter: Podcasts;
-  podcastDetail: any;
+  podcastDetail: PodcastDetail;
   setPodcastsByFilter: Dispatch<SetStateAction<Podcasts>>;
   getPodcasts(): void;
   getPodcast(id: string): void;

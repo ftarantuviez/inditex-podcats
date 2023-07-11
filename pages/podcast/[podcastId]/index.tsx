@@ -38,6 +38,7 @@ const PodcastDetail = () => {
     }
   }, [podcastId]);
 
+  console.log(podcastDetail);
   return (
     <Grid container spacing={4} p={4}>
       {loading || !podcastDetail ? (
