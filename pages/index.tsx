@@ -29,6 +29,7 @@ const Home = () => {
               author={podcast["im:artist"].label ?? ""}
               image={podcast["im:image"]?.[2]?.label ?? ""}
               title={podcast.title.label}
+              id={podcast.id.attributes["im:id"]}
             />
           </Grid>
         ))
