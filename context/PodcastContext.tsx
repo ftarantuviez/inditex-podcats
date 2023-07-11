@@ -6,9 +6,10 @@ import { BASE_URL } from "@/constants/apiCalls";
 
 export const PodcastsContext = createContext<PodcastsProviderValues>({
   podcasts: [],
+  podcastsByFilter: [],
+  setPodcastsByFilter: () => {},
   loading: false,
   getPodcasts: () => {},
-  getPodcast: () => {},
   error: {
     isError: false,
     message: "",
@@ -17,6 +18,7 @@ export const PodcastsContext = createContext<PodcastsProviderValues>({
 
 const PodcastsProvider: FC<PodcastsProviderProps> = ({ children }) => {
   const [podcasts, setPodcasts] = useState<Podcasts>([]);
+  const [podcastsByFilter, setPodcastsByFilter] = useState<Podcasts>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     isError: false,
@@ -27,6 +29,7 @@ const PodcastsProvider: FC<PodcastsProviderProps> = ({ children }) => {
     const savedPodcasts = getItemFromStorage("podcasts");
     if (savedPodcasts) {
       setPodcasts(JSON.parse(savedPodcasts));
+      setPodcastsByFilter(JSON.parse(savedPodcasts));
     }
   }, []);
 
@@ -41,6 +44,7 @@ const PodcastsProvider: FC<PodcastsProviderProps> = ({ children }) => {
       const podcastsResponse = JSON.parse(data?.contents)?.feed?.entry;
 
       setPodcasts(podcastsResponse);
+      setPodcastsByFilter(podcastsResponse);
       setItemStorage("podcasts", JSON.stringify(podcastsResponse));
       setItemStorage("lastUpdate", JSON.stringify(Date.now()));
     } catch (error: any) {
@@ -53,29 +57,13 @@ const PodcastsProvider: FC<PodcastsProviderProps> = ({ children }) => {
     setLoading(false);
   };
 
-  const getPodcast = async (podcastId: string) => {
-    setLoading(true);
-    try {
-      const { data } = await axios.get(
-        getUrlWithAllow(
-          `${BASE_URL}/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
-        )
-      );
-    } catch (error: any) {
-      setError({
-        isError: true,
-        message: error?.message ?? "Something went wrong",
-      });
-    }
-    setLoading(false);
-  };
-
   const values: PodcastsProviderValues = {
     podcasts,
+    podcastsByFilter,
+    setPodcastsByFilter,
     loading,
     error,
     getPodcasts,
-    getPodcast,
   };
 
   return (

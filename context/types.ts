@@ -1,10 +1,11 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type PodcastsProviderValues = {
   podcasts: Podcasts;
+  podcastsByFilter: Podcasts;
+  setPodcastsByFilter: Dispatch<SetStateAction<Podcasts>>;
   loading: boolean;
   getPodcasts(): void;
-  getPodcast(podcastId: string | number): void;
   error: {
     isError: boolean;
     message: string;

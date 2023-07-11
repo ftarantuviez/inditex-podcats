@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import { useEffect } from "react";
 
 const Home = () => {
-  const { getPodcasts, podcasts, loading } = usePodcastContext();
+  const { getPodcasts, podcastsByFilter, loading } = usePodcastContext();
 
   useEffect(() => {
     const lastUpdate = Number(getItemFromStorage("lastUpdate"));
@@ -23,7 +23,7 @@ const Home = () => {
       {loading ? (
         <LoadingItems />
       ) : (
-        podcasts?.map((podcast) => (
+        podcastsByFilter?.map((podcast) => (
           <Grid item xs={12} sm={6} md={3} key={podcast.id.attributes["im:id"]}>
             <PodcastCard
               author={podcast["im:artist"].label ?? ""}
